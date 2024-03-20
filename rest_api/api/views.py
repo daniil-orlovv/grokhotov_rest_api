@@ -3,8 +3,9 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
-from api.models import Book, Category, FeedBack
-from api.serializers import BookSerializer, CategorySerializer, FeedBackSerializer
+from api.models import Book, Category, SubCategory, FeedBack
+from api.serializers import (BookSerializer, CategorySerializer,
+                             FeedBackSerializer)
 
 
 class ListRetrieveBook(ReadOnlyModelViewSet):
@@ -31,6 +32,12 @@ class ListRetrieveBook(ReadOnlyModelViewSet):
 class ListCategory(ListAPIView):
 
     queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class ListSubCategory(ListAPIView):
+
+    queryset = SubCategory.objects.all()
     serializer_class = CategorySerializer
 
 
