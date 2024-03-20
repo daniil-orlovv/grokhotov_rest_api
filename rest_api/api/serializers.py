@@ -1,31 +1,21 @@
 from rest_framework import serializers
 
-from api.models import Book, Category, FeedBack, Author
+from api.models import (Book, Category, SubCategory, FeedBack, Author)
 
 
-class SubCategorySerializer(serializers.ModelSerializer):
-
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = (
-            'id',
             'title',
         )
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    subcategories = SubCategorySerializer(
-        many=True,
-        source='category_subcategories',
-        read_only=True
-    )
-
+class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = SubCategory
         fields = (
-            'id',
             'title',
-            'subcategories'
         )
 
 
@@ -39,8 +29,9 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    categories = CategorySerializer(
+    category = CategorySerializer(
         many=True,
+        source='categories',
         read_only=True
     )
     authors = AuthorSerializer(
@@ -49,6 +40,11 @@ class BookSerializer(serializers.ModelSerializer):
     )
     related_books = serializers.SerializerMethodField(
         method_name='get_related_books'
+    )
+    subcategory = SubCategorySerializer(
+        many=True,
+        source='subcategories',
+        read_only=True
     )
 
     class Meta:
@@ -62,7 +58,8 @@ class BookSerializer(serializers.ModelSerializer):
             'thumbnailurl',
             'status',
             'authors',
-            'categories',
+            'category',
+            'subcategory',
             'related_books'
         )
 
@@ -78,4 +75,13 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class FeedBackSerializer(serializers.ModelSerializer):
-    ...
+
+    class Meta:
+        model = FeedBack
+        fields = (
+            'id',
+            'email',
+            'name',
+            'comment',
+            'phone',
+        )
