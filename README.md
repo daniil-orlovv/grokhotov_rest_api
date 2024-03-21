@@ -24,5 +24,9 @@
 6. Выполнить миграции:
 `python manage.py makemigrations` -> `python manage.py migrate`
 
+7. Создать суперюзера для входа в админку
+`python manage.py createsuperuser`
+
+
 
 # Стек технологий
