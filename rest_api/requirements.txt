@@ -1,0 +1,8 @@
+Django==4.2
+djangorestframework==3.14.0
+django-filter==24.1
+requests==2.31.0
+djoser==2.1.0
+djangorestframework-simplejwt==4.7.2
+drf-yasg
+python-dotenv==1.0.1
