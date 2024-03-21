@@ -12,12 +12,12 @@ django.setup()
 from ..models import Book, Category, Author
 
 
-def parse_json():
-    with open('books.json', 'r') as f:
+def parse_json() -> None:
+    with open('api/parsing_json/books.json', 'r') as f:
         data = json.load(f)
 
-    if not os.path.exists('images'):
-        os.mkdir('images')
+    if not os.path.exists('api/parsing_json/images'):
+        os.mkdir('api/parsing_json/images')
 
     keywords = ['title', 'isbn', 'pageCount', 'publishedDate', 'thumbnailUrl',
                 'shortDescription', 'longDescription', 'status', 'authors']
