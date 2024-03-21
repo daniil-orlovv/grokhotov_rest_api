@@ -1,0 +1,14 @@
+volumes:
+  db_sqlite3:
+  images:
+
+services:
+
+  backend:
+    build: ./
+    env_file: .env
+    volumes:
+      - db_sqlite3:/data/
+      - images:/api/parsing_json/images/
+    ports:
+      - 8000:8000
