@@ -29,7 +29,7 @@
 `docker-compose up`
 
 5. Зайти в контейнер:
-`winpty docker exec -it rest_api-backend-1 bash`(`rest_api-backend-1` - название контейнера)
+`winpty docker exec -it rest_api-backend-1 bash`(`rest_api-backend-1`) - название контейнера)
 
 6. Выполнить миграции, находясь в `/app#`:
 `python manage.py makemigrations api` -> `python manage.py migrate`
