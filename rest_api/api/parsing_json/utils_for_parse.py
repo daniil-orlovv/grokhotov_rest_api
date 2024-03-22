@@ -1,8 +1,19 @@
 import os
 import requests
+from typing import List, Optional, Union
+
+from dotenv import load_dotenv
+
+load_dotenv()
+URL_FOR_GET_JSON_FILE = os.getenv('URL_FOR_GET_JSON_FILE', default='url')
 
 
-def print_info(without_isbn, duplicate_isbn, duplicate_book):
+def print_info(
+        without_isbn: List,
+        duplicate_isbn: List,
+        duplicate_book: List
+        ) -> None:
+
     if without_isbn:
         print("Следующие книги не имеют ISBN:")
         for book in without_isbn:
@@ -20,7 +31,8 @@ def print_info(without_isbn, duplicate_isbn, duplicate_book):
         print('\n')
 
 
-def check_keywords(keyword, item):
+def check_keywords(keyword: str, item: dict) -> Optional[Union[str, int]]:
+
     if keyword == 'publishedDate':
         if 'publishedDate' in item:
             published_date = item['publishedDate']
@@ -32,8 +44,9 @@ def check_keywords(keyword, item):
     return result
 
 
-def download_picture(url):
-    filename = os.path.join('images', os.path.basename(url))
+def download_picture(url: str) -> None:
+
+    filename = os.path.join('api/parsing_json/images', os.path.basename(url))
     if os.path.exists(filename):
         print(f"Изображение '{filename}' уже существует.")
         return
@@ -44,9 +57,10 @@ def download_picture(url):
             file.write(response.content)
 
 
-def download_json():
-    url = "https://gitlab.grokhotov.ru/hr/python-test-vacancy/-/raw/master/books.json?inline=false"
-    file_name = 'books.json'
+def download_json() -> None:
+
+    url = URL_FOR_GET_JSON_FILE
+    file_name = 'api/parsing_json/books.json'
     response = requests.get(url)
 
     if response.status_code == 200:
